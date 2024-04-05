@@ -1,0 +1,8 @@
+
+[flake8]
+exclude =
+    migrations,
+    __pycache__,
+    manage.py,
+    settings.py
+# tells flake8 to exclude these following directories and files from listing
