@@ -1,7 +1,7 @@
 """
 Test custom Django management commands.
 """
-# mock the behavior of the database because we need to be able to simulate 
+# mock the behavior of the database because we need to be able to simulate
 # when database is return response or not
 from unittest.mock import patch
 
@@ -29,15 +29,15 @@ class CommandTest(SimpleTestCase):
 
         patched_check.assert_called_once_with(databases=['default'])
 
-    # the more you add on top, the more it adds to the end 
+    # the more you add on top, the more it adds to the end
     @patch('time.sleep')
     def test_wait_for_db_delay(self, patched_sleep, patched_check):
         """Test waiting for database when getting OperationalError."""
         """This is how mocking work, db was not ready"""
-        patched_check.side_effect=[Psycopg2Error] * 2 + \
+        patched_check.side_effect = [Psycopg2Error] * 2 + \
             [OperationalError] * 3 + [True]
         
         call_command('wait_for_db')
 
-        self.assertEqual(patched_check.call_count,6)
+        self.assertEqual(patched_check.call_count, 6)
         patched_check.assert_called_with(databases=['default'])
