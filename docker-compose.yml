@@ -1,4 +1,4 @@
-version: "3.9"   
+version: "3.9"
 
 services:
 #service 1
@@ -11,10 +11,11 @@ services:
       - "8000:8000"
     volumes:
       - ./app:/app
+      - dev-static-data:/vol/web
     # 1 wait for db command to be available, 2 migration, 3 run server
     command: >
       sh -c "python manage.py wait_for_db &&
-             python manage.py migrate && 
+             python manage.py migrate &&
              python manage.py runserver 0.0.0.0:8000"
     # how to connect with db
     environment:
@@ -26,7 +27,7 @@ services:
       - db
 
 #service 2
-  db:  
+  db:
     image: postgres:13-alpine
     volumes:
       - dev-db-data:/var/lib/postgresql/data
@@ -37,3 +38,4 @@ services:
 
 volumes:
   dev-db-data:
+  dev-static-data:
